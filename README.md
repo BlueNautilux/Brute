@@ -1,6 +1,3 @@
-# Codebase
-Simple codebase including some of my code
-
-This includes:
-- Safepass
-- Brute (name subject to change)
+# Brute
+This the brute repository, brute is a TUI program 
+that lets you control ssh servers easily 
