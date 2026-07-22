@@ -3,7 +3,7 @@
 #include <ctime>
 #include <chrono>
 #include <thread>
-
+#include <fstream>
 
 using namespace std;
 
@@ -15,6 +15,36 @@ void timeSleepOne(){
     using namespace std::this_thread; // sleep_for, sleep_until
     using namespace std::chrono; // nanoseconds, system_clock, seconds
     sleep_until(system_clock::now() + seconds(1));
+}
+
+void sshFileHandling(){
+    string localip;
+    string alias;
+    cout << "enter the server local ip";
+    cin >> localip;
+    cout << "enter the server's alias";
+    cin >> alias;
+    fstream sshFile; //in is for reading and app is for appending out is for writing (overwriting) 
+    sshFile.open("serverlist.txt", std::ios::in | std::ios::app );
+    sshFile << localip << endl << alias << endl; 
+    sshFile.close();
+}
+
+void sshFunction(){
+
+}
+
+void sftpFunction(){
+
+}
+
+void readmeFunction(){
+    string readmeContents;
+    fstream readmeFile;
+    readmeFile.open("README.md", std::ios::in);
+    cout << readmeFile.rdbuf();
+    readmeFile.close();
+    cout << readmeContents << endl;  
 }
 
 void fetchTime(){
@@ -37,26 +67,36 @@ void mainMenu(){
     cout << "=================================\n";
     cout << title << endl;
     cout << "=================================\n";
-    cout << "[1.] [ SSH  ]\n";
+    cout << "[1.] [ SSH ]\n";
     cout << "[2.] [ SFTP ]\n";
-    cout << "[3.] [ Exit ]\n";
+    cout << "[3.] [ README ]\n";
+    cout << "[4.] [ Exit ]\n";
     cout << "=================================\n";
-    cout << "[1-3] ";
+    cout << "[1-4] ";
     cin >> mainMenuAnswer;
     
     switch (mainMenuAnswer){
         case 1:
             cout << "";
+            sshFunction();
             break; 
         case 2:
             cout << "";
+            sftpFunction();
             break; 
         case 3:
+            cout << "";
+            readmeFunction();
+            break;  
+        case 4:
             clearTerminal();
             cout << "Exiting\n";
             timeSleepOne();
             clearTerminal();
             exit;
+            break;
+        default:
+            cout << "";
             break;
     } 
 
