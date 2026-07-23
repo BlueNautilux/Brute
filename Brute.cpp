@@ -38,33 +38,6 @@ void sftpFunction(){
 
 }
 
-void readmeFunction(){
-    char readmeAnswer;
-    string readmeContents;
-    fstream readmeFile;
-    readmeFile.open("README.md", std::ios::in);
-    cout << readmeFile.rdbuf();
-    readmeFile.close();
-    cout << readmeContents << endl;
-    cout << "Would you like to go back?\n";
-    cout << "Enter [Y] or [N]: ";
-    cin >> readmeAnswer;
-    
-    if (readmeAnswer == 'y' || readmeAnswer == 'Y'){
-        cout << "";
-    }
-    
-    else if (readmeAnswer == 'n' || readmeAnswer == 'N'){
-        cout << "";
-    }
-    
-    else{
-        cout << "Invalid Input Try Again";
-        readmeFunction();
-
-    }   
-}
-
 void fetchTime(){
     time_t timestamp;
     time(&timestamp);
@@ -132,6 +105,38 @@ void mainMenu(){ //This includes all the tui for the main menu and some other st
     } 
 
 };
+
+void readmeFunction(){
+    char readmeAnswer;
+    string readmeContents;
+    fstream readmeFile;
+    readmeFile.open("README.md", std::ios::in);
+    cout << readmeFile.rdbuf();
+    readmeFile.close();
+    cout << readmeContents << endl;
+    cout << "Would you like to go back?\n";
+    cout << "Enter [Y] or [N]: ";
+    cin >> readmeAnswer;
+    
+    if (readmeAnswer == 'y' || readmeAnswer == 'Y'){ //To be rewritten later, fix by making it turn the char input into a uppercase letter
+        clearTerminal();
+        cout << "Opening Main Menu";
+        timeSleepOne();
+        clearTerminal();
+        mainMenu();
+    }
+    
+    else if (readmeAnswer == 'n' || readmeAnswer == 'N'){
+        timeSleepOne();
+        clearTerminal();
+        readmeFunction();
+    }
+    
+    else{
+        cout << "Invalid Input Try Again";
+        readmeFunction();
+    }   
+}
 
 int main(){ //Main script
     clearTerminal();
