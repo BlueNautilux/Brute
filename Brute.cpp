@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void clearTerminal(){
+void clearTerminal(){ //Clears the terminal
     system("printf '\\033[H\\033[2J'"); //ASCII Shortcut for clearing the terminal with scrollback might be changed later
 };
 
@@ -17,14 +17,14 @@ void timeSleepOne(){
     sleep_until(system_clock::now() + seconds(1));
 }
 
-void sshFileHandling(){
+void sshFileHandling(){ //saves the server credentials in a txt file 
     string localip;
     string alias;
     cout << "enter the server local ip";
     cin >> localip;
     cout << "enter the server's alias";
     cin >> alias;
-    fstream sshFile; //in is for reading and app is for appending out is for writing (overwriting) 
+    fstream sshFile; //in is for reading, and app is for appending, out is for writing (overwriting) 
     sshFile.open("serverlist.txt", std::ios::in | std::ios::app );
     sshFile << localip << endl << alias << endl; 
     sshFile.close();
@@ -39,12 +39,30 @@ void sftpFunction(){
 }
 
 void readmeFunction(){
+    char readmeAnswer;
     string readmeContents;
     fstream readmeFile;
     readmeFile.open("README.md", std::ios::in);
     cout << readmeFile.rdbuf();
     readmeFile.close();
-    cout << readmeContents << endl;  
+    cout << readmeContents << endl;
+    cout << "Would you like to go back?\n";
+    cout << "Enter [Y] or [N]: ";
+    cin >> readmeAnswer;
+    
+    if (readmeAnswer == 'y' || readmeAnswer == 'Y'){
+        cout << "";
+    }
+    
+    else if (readmeAnswer == 'n' || readmeAnswer == 'N'){
+        cout << "";
+    }
+    
+    else{
+        cout << "Invalid Input Try Again";
+        readmeFunction();
+
+    }   
 }
 
 void fetchTime(){
@@ -54,8 +72,9 @@ void fetchTime(){
     cout << x;
 }
 
-void mainMenu(){
+void mainMenu(){ //This includes all the tui for the main menu and some other stuff
     int mainMenuAnswer;
+    
     string title = R"( 
        __            __
       / /  ______ __/ /____ 
@@ -67,7 +86,7 @@ void mainMenu(){
     cout << "=================================\n";
     cout << title << endl;
     cout << "=================================\n";
-    cout << "[1.] [ SSH ]\n";
+    cout << "[1.] [ SSH  ]\n";
     cout << "[2.] [ SFTP ]\n";
     cout << "[3.] [ README ]\n";
     cout << "[4.] [ Exit ]\n";
@@ -76,18 +95,25 @@ void mainMenu(){
     cin >> mainMenuAnswer;
     
     switch (mainMenuAnswer){
+        
         case 1:
-            cout << "";
+            clearTerminal();
+            cout << "Opening SSH";
             sshFunction();
             break; 
+        
         case 2:
-            cout << "";
+            clearTerminal();
+            cout << "Opening SFTP";
             sftpFunction();
             break; 
+        
         case 3:
-            cout << "";
+            clearTerminal();
+            cout << "Opening README";
             readmeFunction();
             break;  
+        
         case 4:
             clearTerminal();
             cout << "Exiting\n";
@@ -95,14 +121,19 @@ void mainMenu(){
             clearTerminal();
             exit;
             break;
+        
         default:
-            cout << "";
+            clearTerminal();
+            cout << "Invalid Input Try Again";
+            timeSleepOne();
+            clearTerminal();
+            mainMenu();
             break;
     } 
 
 };
 
-int main(){
+int main(){ //Main script
     clearTerminal();
     mainMenu();
 };
