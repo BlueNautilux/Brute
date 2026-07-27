@@ -1,5 +1,5 @@
 # Brute
-brute is a TUI program that lets you control ssh servers easily
+brute is a TUI program that lets you control ssh servers easily.
 i will release the first build once i finish the barebone functions.
 
 Picture of the interface:
