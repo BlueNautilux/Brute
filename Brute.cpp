@@ -19,23 +19,47 @@ void timeSleepOne(){
 
 void sshFileHandling(){ //saves the server credentials in a txt file 
     string localip;
+    string username;
     string alias;
-    cout << "enter the server local ip";
-    cin >> localip;
-    cout << "enter the server's alias";
+    string combinedip;
+    
+    while (1){
+        clearTerminal();
+        cout << "enter the server local ip";
+        cin >> localip;
+        if (localip.size() > 7 && localip.size() < 15) {
+            break;
+        }
+
+        else {
+            cout << "Invalid IP, please enter an ip between 7-15 characters in length";
+            timeSleepOne();
+            clearTerminal();
+        }
+    }
+    
+    cout << "enter the server username: "; //enter server username
+    cin >> username;
+    clearTerminal();
+    
+    cout << "enter the servers alias: "; //enter server ali-09=as
     cin >> alias;
+    clearTerminal();
+    
     fstream sshFile; //in is for reading, and app is for appending, out is for writing (overwriting) 
     sshFile.open("serverlist.txt", std::ios::in | std::ios::app );
-    sshFile << localip << endl << alias << endl; 
+    sshFile << alias << endl << localip << endl; 
     sshFile.close();
+    combinedip = "ssh " +username+ "@" +localip;
+    system(combinedip.c_str());
 }
 
-void sshFunction(){
-
+void sshFunction(){ // will be completed soon
+    sshFileHandling();
 }
 
-void sftpFunction(){
-
+void sftpFunction(){ // will be completed soon
+    sshFileHandling();
 }
 
 void fetchTime(){
@@ -85,7 +109,6 @@ void mainMenu(){ //This includes all the tui for the main menu and some other st
             cout << "Exiting\n";
             timeSleepOne();
             clearTerminal();
-            exit;
             break;
         
         default:
