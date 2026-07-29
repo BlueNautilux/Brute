@@ -3,7 +3,7 @@
 #include <ctime>
 #include <chrono>
 #include <thread>
-#include <fstream>
+// #include <fstream> server saving will be added in next release.
 
 using namespace std;
 
@@ -17,11 +17,24 @@ void timeSleepOne(){
     sleep_until(system_clock::now() + seconds(1));
 }
 
-void sshFileHandling(){ //saves the server credentials in a txt file 
+void exitAnim(){
+    string exitAnimstring = "Exiting";
+    int number = 0;
+    while (number < 4){
+        cout << exitAnimstring << endl;
+        exitAnimstring = exitAnimstring+ ".";
+        timeSleepOne();
+        clearTerminal();
+        ++number;
+    }
+}
+
+void sshFunc(int x){ //saves the server credentials in a txt file 
     string localip;
     string username;
     string alias;
-    string combinedip;
+    string combinedipssh;
+    string exitquestion;
     
     while (1){
         clearTerminal();
@@ -46,20 +59,46 @@ void sshFileHandling(){ //saves the server credentials in a txt file
     cin >> alias;
     clearTerminal();
     
-    fstream sshFile; //in is for reading, and app is for appending, out is for writing (overwriting) 
+    /*fstream sshFile; //in is for reading, and app is for appending, out is for writing (overwriting) will be fixed and added in later release
     sshFile.open("serverlist.txt", std::ios::in | std::ios::app );
-    sshFile << alias << endl << localip << endl; 
-    sshFile.close();
-    combinedip = "ssh " +username+ "@" +localip;
-    system(combinedip.c_str());
+    sshFile << alias << username << endl << localip << endl; 
+    sshFile.close(); */
+    if (x == 1) combinedipssh = "ssh " +username+ "@" +localip;
+    else if (x == 2) combinedipssh = "sftp " +username+ "@" +localip;
+    system(combinedipssh.c_str());
+    clearTerminal();
+    cout << "Would you like to quit? [Y] or [N]: ";
+    cin >> exitquestion;
+    while (1){
+
+        if (exitquestion == "y" || exitquestion == "Y" ){
+            exitAnim();
+            break;
+        
+        }
+        else if (exitquestion == "n" || exitquestion == "N"){
+            system(combinedipssh.c_str());
+            cout << "Would you like to quit? [Y] or [N]: ";
+            cin >> exitquestion;
+        }
+        else {
+            cout << "invalid answer enter [Y] or [N]: ";
+            timeSleepOne();
+            clearTerminal();
+            cout << "Would you like to quit? [Y] or [N]: ";
+            cin >> exitquestion;
+        }
+    }
 }
 
-void sshFunction(){ // will be completed soon
-    sshFileHandling();
+void sshFunction(){ 
+    int x = 1;
+    sshFunc(x);
 }
 
-void sftpFunction(){ // will be completed soon
-    sshFileHandling();
+void sftpFunction(){
+    int x = 2; 
+    sshFunc(x);
 }
 
 void fetchTime(){
@@ -106,9 +145,7 @@ void mainMenu(){ //This includes all the tui for the main menu and some other st
 
         case 3:
             clearTerminal();
-            cout << "Exiting\n";
-            timeSleepOne();
-            clearTerminal();
+            exitAnim();
             break;
         
         default:
