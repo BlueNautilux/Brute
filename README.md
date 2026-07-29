@@ -6,3 +6,4 @@ Picture of the interface:
 
 <img width="561" height="534" alt="image" src="https://github.com/user-attachments/assets/914862f1-0b8f-4013-8cdc-1bc3985d769e" />
 
+ the first release is very barebones and is unstable so dont expect much
