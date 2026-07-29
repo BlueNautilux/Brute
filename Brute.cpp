@@ -29,7 +29,7 @@ void exitAnim(){
     }
 }
 
-void sshFunc(int x){ //saves the server credentials in a txt file 
+void sshFunc(int x){ //saves the server ip, user and alias in a txt file 
     string localip;
     string username;
     string alias;
@@ -38,14 +38,14 @@ void sshFunc(int x){ //saves the server credentials in a txt file
     
     while (1){
         clearTerminal();
-        cout << "enter the server local ip";
+        cout << "enter the server local ip: ";
         cin >> localip;
         if (localip.size() > 7 && localip.size() < 15) {
             break;
         }
 
         else {
-            cout << "Invalid IP, please enter an ip between 7-15 characters in length";
+            cout << "Invalid IP, please enter an ip between 7-15 characters in length\n";
             timeSleepOne();
             clearTerminal();
         }
@@ -53,9 +53,8 @@ void sshFunc(int x){ //saves the server credentials in a txt file
     
     cout << "enter the server username: "; //enter server username
     cin >> username;
-    clearTerminal();
     
-    cout << "enter the servers alias: "; //enter server ali-09=as
+    cout << "enter the servers alias: "; //enter server alias
     cin >> alias;
     clearTerminal();
     
@@ -133,13 +132,17 @@ void mainMenu(){ //This includes all the tui for the main menu and some other st
         
         case 1:
             clearTerminal();
-            cout << "Opening SSH";
+            cout << "Opening SSH\n";
+            timeSleepOne();
+            clearTerminal();
             sshFunction();
             break; 
         
         case 2:
             clearTerminal();
-            cout << "Opening SFTP";
+            cout << "Opening SFTP\n";
+            timeSleepOne();
+            clearTerminal();
             sftpFunction();
             break; 
 
@@ -150,7 +153,7 @@ void mainMenu(){ //This includes all the tui for the main menu and some other st
         
         default:
             clearTerminal();
-            cout << "Invalid Input Try Again";
+            cout << "Invalid Input Try Again\n";
             timeSleepOne();
             clearTerminal();
             mainMenu();
